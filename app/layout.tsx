@@ -6,8 +6,8 @@ import { ClerkProvider} from '@clerk/nextjs'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Cholo Shikhi - eLearning Platform',
-  description: 'Cholo Shikhi - eLearning Platform for Bangladeshi Students and Teachers to learn and teach online.',
+  title: 'CholoShikhi - eLearning Platform',
+  description: 'CholoShikhi - eLearning Platform for Bangladeshi Students and Teachers to learn and teach online.',
 }
 
 export default function RootLayout({

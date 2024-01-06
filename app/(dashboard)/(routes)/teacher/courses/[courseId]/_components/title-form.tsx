@@ -31,6 +31,10 @@ const formSchema = z.object({
     }),
 })
 
+// form resolver
+const resolver = zodResolver(formSchema)
+
+
 export const TitleForm = ({
     initialData,
     courseId,

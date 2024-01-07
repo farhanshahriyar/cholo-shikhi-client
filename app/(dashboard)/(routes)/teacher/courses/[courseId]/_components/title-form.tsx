@@ -16,6 +16,7 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Pencil } from "lucide-react"
 
 interface TitleFormProps {
     initialData: {
@@ -36,9 +37,31 @@ export const TitleForm = ({
     initialData,
     courseId,
 }: TitleFormProps) => {
-    return (
-        <div>
-            <h1> Title Form</h1>
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: initialData,
+    });
+
+    const { isSubmitting, isValid } = form.formState;
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            // const response = await axios.post(`/api/courses/${courseId}/title`, values);
+            // console.log(response.data);
+            console.log(values)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+        return (
+        <div className="mt-6 border bg-slate-100 rounded-md p-4">
+            <div className="font-medium flex items-center justify-between">
+                Course Title
+                <Button variant="ghost">
+                    <Pencil className="h-4 w-4 mr-2" />
+                    Edit Title
+                </Button>
+            </div>
         </div>
     )
 }

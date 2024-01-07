@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Pencil } from "lucide-react"
+import { useState } from "react"
 
 interface TitleFormProps {
     initialData: {
@@ -37,6 +38,8 @@ export const TitleForm = ({
     initialData,
     courseId,
 }: TitleFormProps) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const toggleEdit = () => setIsEditing((current)=> !current);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData,
@@ -57,11 +60,50 @@ export const TitleForm = ({
         <div className="mt-6 border bg-slate-100 rounded-md p-4">
             <div className="font-medium flex items-center justify-between">
                 Course Title
-                <Button variant="ghost">
-                    <Pencil className="h-4 w-4 mr-2" />
-                    Edit Title
+                <Button onClick={toggleEdit} variant="ghost">
+                    { isEditing ? (
+                        <>Cancel</>
+                    ) : (
+                        <>
+                            <Pencil className="h-4 w-4 mr-2" />
+                            Edit Title
+                        </>
+                    )}
                 </Button>
             </div>
+            {!isEditing && (
+                <p className="text-sm mt-2">
+                    {initialData.title}
+                </p>
+            )}
+            {isEditing && (
+                <Form
+                   {...form}>
+                    <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="mt-4 space-y-4"
+                    >
+                        <FormField
+                        control={form.control}
+                        name="title"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                    disabled={isSubmitting}
+                                    {...field}
+                                    placeholder="Course Title"
+                                    />
+                                </FormControl>
+                                <FormMessage>
+                                    {form.formState.errors.title?.message}
+                                </FormMessage>
+                            </FormItem>
+                        )}
+                        />
+                    </form>
+                </Form>
+            )}
         </div>
     )
 }
